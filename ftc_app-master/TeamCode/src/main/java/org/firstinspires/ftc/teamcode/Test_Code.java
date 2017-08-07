@@ -1,16 +1,30 @@
 package org.firstinspires.ftc.teamcode;
 
-
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-/**
- * Created by Quick's on 7/30/2017.
- */
+@TeleOp (name= "Test_Code")
 
-public class Test_Code {
+public class Test_Code extends OpMode {
 
-    DcMotor
+DcMotor Testmotor;
+    double testpower;
+
+    @Override
+    public void init() {
+        Testmotor = (DcMotor) hardwareMap.dcMotor.get("test");
+
+    }
+
+    @Override
+    public void loop() {
+
+        testpower = gamepad1.left_stick_y;
+
+        Testmotor.setPower(testpower);
 
 
+    }
 }
 
