@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Test_Code extends OpMode {
 
-DcMotor Testmotor;
-    DcMotor Testmotor2;
-    DcMotor Arm;
+    Hardware_robodux robot = new Hardware_robodux();
+
+
     double testpower;
     double testpower2;
     double armpower = .3;
@@ -18,9 +18,8 @@ DcMotor Testmotor;
 
     @Override
     public void init() {
-        Testmotor = (DcMotor) hardwareMap.dcMotor.get("test");
-        Testmotor2 = (DcMotor) hardwareMap.dcMotor.get("test2");
-        Arm = (DcMotor) hardwareMap.dcMotor.get("arm");
+
+        robot.init(hardwareMap);
 
 
     }
@@ -32,20 +31,18 @@ DcMotor Testmotor;
         testpower2 = gamepad1.right_stick_y;
 
 
-        Testmotor.setPower(testpower);
-        Testmotor2.setPower(testpower2);
+        robot.Testmotor.setPower(testpower);
+        robot.Testmotor2.setPower(testpower2);
 
         if (gamepad1.a)
-            Arm.setPower(armpower);
+            robot.Arm.setPower(armpower);
         else
-            Arm.setPower(0.0);
+            robot.Arm.setPower(0.0);
 
         if (gamepad1.b)
-            Arm.setPower(1.0);
+            robot.Arm.setPower(1.0);
         else
-            Arm.setPower(0.0);
-
-
+            robot.Arm.setPower(0.0);
 
 
     }
