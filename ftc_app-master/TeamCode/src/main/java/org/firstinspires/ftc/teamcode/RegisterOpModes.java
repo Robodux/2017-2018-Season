@@ -67,7 +67,8 @@ public class RegisterOpModes
   public static void registerMyOpModes(OpModeManager manager)
 
     {
-manager.register("Test_code", Test_Code.class);
+        manager.register("Test_code", Test_Code.class);
+
         manager.register("Test_Auto_Linear", Test_Code.class);
 
     // Un-comment any line to enable that sample.
