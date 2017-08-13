@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous (name= "Test")
-//@Disabled
+
+@Autonomous (name= "Test_Auto_Linear")
+
 public class Test_Auto_Linear extends LinearOpMode {
 
     Hardware_robodux robot = new Hardware_robodux();

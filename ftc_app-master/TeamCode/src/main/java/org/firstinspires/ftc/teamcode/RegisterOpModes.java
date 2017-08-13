@@ -34,7 +34,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
-import junit.framework.Test;
 
 /**
  * This class demonstrates how to manually register opmodes.
@@ -69,8 +68,7 @@ public class RegisterOpModes
     {
         manager.register("Test_code", Test_Code.class);
 
-        manager.register("Test_Auto_Linear", Test_Code.class);
-
+        manager.register("Test_Auto_Linear", Test_Auto_Linear.class);
     // Un-comment any line to enable that sample.
     // Or add your own lines to register your Team opmodes.
 
