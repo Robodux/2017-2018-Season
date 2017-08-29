@@ -67,8 +67,9 @@ public class RegisterOpModes
 
     {
         manager.register("Test_code", Test_Code.class);
-
         manager.register("Test_Auto_Linear", Test_Auto_Linear.class);
+        manager.register("Encoder", Encoder.class);
+        manager.register("Drive_Straight" , Drive_Straight.class);
     // Un-comment any line to enable that sample.
     // Or add your own lines to register your Team opmodes.
 

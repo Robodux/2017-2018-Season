@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -66,14 +68,13 @@ public class Test_Code extends OpMode {
             //robot.Arm.setPower(0.0);
 
     }
-    public void zeroTurn(double targetHeading, double turnSpeed){
-        if (heading > targetHeading)
-            robot.Testmotor.setPower(turnSpeed);
-            robot.Testmotor2.setPower(-turnSpeed);
-        else if (heading < targetHeading)
-            robot.Testmotor.setPower(-turnSpeed);
-            robot.Testmotor2.setPower(turnSpeed);
+    //public void zeroTurn(double targetHeading, double turnSpeed){
+        //if (heading > targetHeading)
+            //robot.Testmotor.setPower(turnSpeed);
+            //robot.Testmotor2.setPower(-turnSpeed);
+        //else if (heading < targetHeading)
+            //robot.Testmotor.setPower(-turnSpeed);
+            //robot.Testmotor2.setPower(turnSpeed);
 
     }
-}
 
