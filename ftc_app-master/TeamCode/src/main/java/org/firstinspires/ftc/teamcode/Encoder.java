@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by Quick's on 8/27/2017.
  */
-
+/*
 @TeleOp (name = "Encoder")
 
 public class Encoder extends OpMode {
@@ -33,3 +33,4 @@ public class Encoder extends OpMode {
         robot.Testmotor.setPower(.2);
     }
 }
+*/
