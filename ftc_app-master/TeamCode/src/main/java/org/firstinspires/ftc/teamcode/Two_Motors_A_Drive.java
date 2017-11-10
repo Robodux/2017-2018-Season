@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.lynx.LynxI2cColorRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.configuration.LynxI2cDeviceConfiguration;
  * Created by Quick's on 9/21/2017.
  */
 @TeleOp (name = "Two Motors Test")
+@Disabled
 public class Two_Motors_A_Drive extends OpMode {
 
     Hardware_robodux robot = new Hardware_robodux();

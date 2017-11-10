@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @TeleOp (name = "REV_test")
+@Disabled
 public class REV_motor_test extends OpMode{
     Hardware_robodux robot = new Hardware_robodux();
     @Override

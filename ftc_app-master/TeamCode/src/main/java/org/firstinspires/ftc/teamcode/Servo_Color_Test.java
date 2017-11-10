@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.lynx.LynxI2cColorRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Quick's on 9/28/2017.21 */
 
 @TeleOp(name = "Servo_Color_Test")
+@Disabled
 public class Servo_Color_Test extends OpMode{
     public LynxI2cColorRangeSensor color1 = null;
 

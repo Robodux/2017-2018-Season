@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Quick's on 9/21/2017.
  */
 @TeleOp
+@Disabled
 public class Color_Motor__Test extends OpMode {
 
     public LynxI2cColorRangeSensor color1 = null;

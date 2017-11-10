@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp (name= "Test_code")
+@Disabled
 public class Test_Code extends OpMode {
 
     Hardware_robodux robot = new Hardware_robodux();

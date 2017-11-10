@@ -22,8 +22,8 @@ import static java.lang.Math.abs;
 /**
  * Created by Quick's on 10/26/2017.
  */
-@Autonomous(name = "Test")
-public class Auto_Test extends LinearOpMode {
+@Autonomous(name = "Blue_Center", group = "Blue")
+public class Blue_Center extends LinearOpMode {
 
 
     public LynxI2cColorRangeSensor color1 = null;
@@ -38,7 +38,6 @@ public class Auto_Test extends LinearOpMode {
 
     double red = 0;
     double blue = 0;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -57,30 +56,40 @@ public class Auto_Test extends LinearOpMode {
 
         robot.jewel_arm.setPosition(arm_up);
 
-        robot.intake_sevr.setPosition(0.7);
-        robot.intake_sevl.setPosition(0.3);
-        robot.clampl.setPosition(0.8);
-        robot.clampr.setPosition(0.2);
+        robot.intake_sevr.setPosition(0.63);//one is closed
+        robot.intake_sevl.setPosition(0.34);//zero is closed
+        robot.clampl.setPosition(0.905);
+        robot.clampr.setPosition(0.095);
+
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = DEGREES;
+
+        imu.initialize(parameters);
 
 
         waitForStart();
-        sleep(100);
+        sleep(30);
+
+        robot.clampr.setPosition(0.095);
+        robot.clampl.setPosition(0.905);
 
         robot.intake_sevl.setPosition(.57);
         robot.intake_sevr.setPosition(.43);
 
         robot.jewel_arm.setPosition(arm_down);
-        robot.clampr.setPosition(0.095);
-        robot.clampl.setPosition(0.905);
 
-        sleep(500);
 
-        robot.liftl.setTargetPosition(200);
-        robot.liftr.setTargetPosition(200);
+        sleep(650);
+
+        robot.liftl.setTargetPosition(125);
+        robot.liftr.setTargetPosition(125);
         robot.liftl.setPower(.5);
         robot.liftr.setPower(.5);
 
-        sleep(600);
+        sleep(100);
 
         red = color1.red()/15;
         blue = color1.blue()/11;
@@ -93,43 +102,74 @@ public class Auto_Test extends LinearOpMode {
         if(red > blue){
 
 
-            DriveStraight(-150, 0.2);//back up to knock jewel off
-            sleep(400);
+            DriveStraight(-160, 0.2);//back up to knock jewel off
+            sleep(200);
             robot.jewel_arm.setPosition(arm_up);
-            sleep(400);
-            DriveStraight(2550, 0.25);//Drive Off far enough to line up with cryptobox
+            sleep(200);
+            DriveStraight(2720, 0.25);//Drive Off far enough to line up with cryptobox
 
         }
         //If RED
-        if (blue < red){
+        if (blue > red){
 
             DriveStraight(1000, 0.25);//Knock off Jewel and drive off stone
             robot.jewel_arm.setPosition(arm_up);
             sleep(100);
-            DriveStraight(1400, 0.3);//drive to line up with cryptobox
+            DriveStraight(1560, 0.3);//drive to line up with cryptobox
 
         }
         //If NONE
         if (blue == red){
             robot.jewel_arm.setPosition(arm_up);
             sleep(1000);
-            DriveStraight(2400, .25);//Drive Off
+            DriveStraight(2560, .25);//Drive Off
         }
+        sleep(100);
+        robot.liftl.setTargetPosition(25);
+        robot.liftr.setTargetPosition(25);
+        robot.liftl.setPower(.5);
+        robot.liftr.setPower(.5);
+        GyroTurn(-89,.25);//Turn 90 DEGREES
+        sleep(100);
+        DriveStraight(1200,.4);
+        sleep(100);
+        robot.clampr.setPosition(.19);
+        robot.clampl.setPosition(.81);
+        sleep(100);
+        DriveStraight(-700,.5);
+        robot.liftl.setTargetPosition(0);
+        robot.liftr.setTargetPosition(0);
+        robot.liftl.setPower(.5);
+        robot.liftr.setPower(.5);
+        sleep(100);
+        GyroTurn(87,.35);
+        /*sleep(100);
+        robot.intake_sevl.setPosition(0);
+        robot.intake_sevr.setPosition(1);
+        robot.intakel.setPower(1);
+        robot.intaker.setPower(1);
+        DriveStraight(2050,.45);
+        sleep(100);
+        DriveStraight(250,.1);
+        sleep(1200);
+        robot.intakel.setPower(1);
+        robot.intaker.setPower(-.25);
+        sleep(550);
+        robot.intakel.setPower(1);
+        robot.intaker.setPower(1);
         sleep(400);
-        GyroTurn(-88,.2);//Turn 90 DEGREES
-        sleep(500);
-        DriveStraight(300,.2);
-
+        DriveStraight(-500,.45);
+        sleep(100);
+        GyroTurn(-83,.35);
+        sleep(100);
+        DriveStraight(2000,.45);
+        sleep(100);
+*/
     }
 
     public void GyroTurn (int target_angle, double speed) {
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
 
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = DEGREES;
-
-        imu.initialize(parameters);
 
         robot.left_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.right_front_drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -167,22 +207,22 @@ public class Auto_Test extends LinearOpMode {
             EDiff = abs(robot.right_front_drive.getCurrentPosition()) - abs(robot.left_front_drive.getCurrentPosition());
 
 
-            if (ADiff > 0 && MagDiff >= 8){
+            if (ADiff > 0 && MagDiff >= 12){
                 right_motor_power = -speed;
                 left_motor_power = speed;
             }
 
-            if (ADiff > 0 && MagDiff < 8){
+            if (ADiff > 0 && MagDiff < 12){
                 right_motor_power = -speed/2.5;
                 left_motor_power = speed/2.5;
             }
 
-            if (ADiff < 0 && MagDiff >= 8){
+            if (ADiff < 0 && MagDiff >= 12){
                 right_motor_power = speed;
                 left_motor_power = -speed;
             }
 
-            if (ADiff < 0 && MagDiff < 8){
+            if (ADiff < 0 && MagDiff < 12){
                 right_motor_power = speed/2.5;
                 left_motor_power = -speed/2.5;
             }
@@ -236,13 +276,7 @@ public class Auto_Test extends LinearOpMode {
         robot.left_rear_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.right_rear_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        while (((((abs(leftposition + rightposition)) / 2) + 15) < abs(distance)) || ((((abs(leftposition + rightposition)) / 2) - 15) > abs(distance))) {
-
-            telemetry.addData("rightpower", rightpower);
-            telemetry.addData("leftpower", leftpower);
-            telemetry.addData("leftencoder", robot.left_rear_drive.getCurrentPosition());
-            telemetry.addData("rightencoder", robot.right_front_drive.getCurrentPosition());
-            telemetry.update();
+        while (((((abs(leftposition + rightposition)) / 2) + 25) < abs(distance)) || ((((abs(leftposition + rightposition)) / 2) - 25) > abs(distance))) {
 
             leftposition = robot.left_rear_drive.getCurrentPosition();
             rightposition = robot.right_front_drive.getCurrentPosition();

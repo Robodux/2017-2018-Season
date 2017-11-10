@@ -25,31 +25,30 @@ public class DUX_DRIVE_TWO extends OpMode {
     int state = 1;
 
     int floor = 0;//Floor position for intake
-    int low = 65;//Low intake position
-    int storage = 415;//Storage Position for lift
-    int highpos = 810;// High position for lift
+    int low = 120;//Low intake position
+    int storage = 440;//Storage Position for lift
+    int highpos = 865;// High position for lift
     int top = 1160;//top position for lift
 
     double liftpower = .7;
-    double delay = .1;
+    double delay = .13;
 
     double intakepos = 0;
     double clamppos = 0;
 
-    double clampopen = .2;
-    double clampclosed = .095;
+    double clampopen = .23;
+    double clampclosed = .065;
 
-    double intakeopen = 0.12;
-    double intakeallopen = .43;
+    double intakeopen = 0.13;
+    double intakeallopen = .47;
     double intakeclosed = 0;
     double time;
 
     double reset = 0;
+    boolean second_block = false;
 
     double rightpower = 0;
     double leftpower = 0;
-
-    double lefta, righta, max;
 
     public LynxI2cColorRangeSensor color1 = null;
     @Override
@@ -61,45 +60,24 @@ public class DUX_DRIVE_TWO extends OpMode {
         robot.liftr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.liftl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //robot.intake_sevr.setPosition(.8);
-        //robot.intake_sevl.setPosition(.2);
-
         robot.clampl.setPosition(.81);
         robot.clampr.setPosition(.19);
 
         robot.liftr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.liftl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        color1.enableLed(false);
 
     }
 
     @Override
     public void loop() {
 
-        /*telemetry.addData("State", state);
-        telemetry.addData("Right Pos", robot.liftr.getCurrentPosition());
-        telemetry.addData("Left Pos", robot.liftl.getCurrentPosition());
-        telemetry.addData("Right Power", robot.liftr.getPower());
-        telemetry.addData("Left Power", robot.liftl.getPower());
-        telemetry.update();*/
 
         robot.intake_sevr.setPosition(1 - intakepos);
         robot.intake_sevl.setPosition(intakepos);
 
         robot.clampr.setPosition(clamppos);
         robot.clampl.setPosition(1 - clamppos);
-/*
-        robot.right_front_drive.setPower(gamepad1.right_stick_y);
-        robot.right_rear_drive.setPower(gamepad1.right_stick_y);
-
-        robot.left_front_drive.setPower(gamepad1.left_stick_y);
-        robot.left_rear_drive.setPower(gamepad1.left_stick_y);
-*/
-
-        //telemetry.addData("right motor speed", robot.right_front_drive);
-        //telemetry.addData("left motor speed", robot.left_front_drive);
-        //telemetry.addData("blue", color1.blue());
-        //telemetry.addData("Red", color1.red());
-
 
         if(gamepad1.right_bumper){
             rightpower = -gamepad1.right_stick_y/2;
@@ -144,7 +122,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             oneshot = false;
             ready = false;
         }
-        if (state == 3 && ready) {
+        if (state == 3 && ready && !second_block) {
             state = 4;
             oneshot = false;
             ready = false;
@@ -167,11 +145,12 @@ public class DUX_DRIVE_TWO extends OpMode {
         }*/
         if (state ==7 && ready) {
             state = 8;
+            second_block = true;
             oneshot = false;
             ready = false;
         }
         if (state ==8 && ready) {
-            state = 9;
+            state = 17;
             oneshot = false;
             ready = false;
         }
@@ -182,7 +161,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             ready = false;
         }
         // SCORE ONE BLOCK UP
-        if ((state ==9 || state ==10 || state == 15 || state == 5) && ready && gamepad2.x) {
+        if ((state ==17 || state ==10 || state == 15 || state == 5 || state == 9) && ready && gamepad2.x) {
             state = 12;
             oneshot = false;
             ready = false;
@@ -194,7 +173,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             ready = false;
         }
         // SCORE TWO BLOCKS UP
-        if ((state ==9 || state == 12 || state == 15 || state == 5) && ready && gamepad2.y) {
+        if ((state ==17 || state == 12 || state == 15 || state == 5 || state == 9) && ready && gamepad2.y) {
             state = 10;
             oneshot = false;
             ready = false;
@@ -206,7 +185,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             ready = false;
         }
         // SCORE THREE BLOCKS UP
-        if ((state ==9 || state ==10 || state == 12 || state ==5) && ready && gamepad2.b) {
+        if ((state ==17 || state ==10 || state == 12 || state ==5 || state == 9) && ready && gamepad2.b) {
             state = 15;
             oneshot = false;
             ready = false;
@@ -218,7 +197,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             ready = false;
         }
         //BACK TO FLOOR
-        if ((state ==10 || state ==12 || state == 15 || state ==5) && ready && gamepad2.a) {
+        if ((state ==10 || state ==12 || state == 15 || state ==5 || state ==17) && ready && gamepad2.a) {
             state = 9;
             oneshot = false;
             ready = false;
@@ -228,6 +207,7 @@ public class DUX_DRIVE_TWO extends OpMode {
             reset = 1;
             state = 2;
             oneshot = false;
+            second_block = false;
             ready = false;
         }
         if (state ==2 && ready && reset == 1) {
@@ -274,7 +254,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
             clamppos = (clampclosed);
 
-            if (robot.liftr.getCurrentPosition() > floor - 20 && robot.liftr.getCurrentPosition() < floor + 20 && (time + delay) < getRuntime()) {
+            if (robot.liftr.getCurrentPosition() > floor - 10 && robot.liftr.getCurrentPosition() < floor + 10 && (time + delay) < getRuntime()) {
                 ready = true;
             }
         }
@@ -295,7 +275,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > floor - 20 && robot.liftr.getCurrentPosition() < floor + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > floor - 10 && robot.liftr.getCurrentPosition() < floor + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -318,7 +298,7 @@ public class DUX_DRIVE_TWO extends OpMode {
                 clamppos = (clampclosed);
 
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -339,7 +319,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -360,7 +340,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -381,7 +361,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -402,7 +382,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > floor - 20 && robot.liftr.getCurrentPosition() < floor + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > floor - 10 && robot.liftr.getCurrentPosition() < floor + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -423,7 +403,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > low - 20 && robot.liftr.getCurrentPosition() < low + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > low - 10 && robot.liftr.getCurrentPosition() < low + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -444,7 +424,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > highpos - 20 && robot.liftr.getCurrentPosition() < highpos + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > highpos - 10 && robot.liftr.getCurrentPosition() < highpos + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -466,7 +446,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > highpos - 20 && robot.liftr.getCurrentPosition() < highpos + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > highpos - 10 && robot.liftr.getCurrentPosition() < highpos + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -488,7 +468,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -510,7 +490,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > storage - 20 && robot.liftr.getCurrentPosition() < storage + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > storage - 10 && robot.liftr.getCurrentPosition() < storage + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -532,7 +512,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > low - 20 && robot.liftr.getCurrentPosition() < low + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > low - 10 && robot.liftr.getCurrentPosition() < low + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -553,7 +533,7 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampclosed);
 
-                if (robot.liftr.getCurrentPosition() > top - 20 && robot.liftr.getCurrentPosition() < top + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > top - 10 && robot.liftr.getCurrentPosition() < top + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
@@ -575,10 +555,30 @@ public class DUX_DRIVE_TWO extends OpMode {
 
                 clamppos = (clampopen);
 
-                if (robot.liftr.getCurrentPosition() > top - 20 && robot.liftr.getCurrentPosition() < top + 20 && (time + delay) < getRuntime()) {
+                if (robot.liftr.getCurrentPosition() > top - 10 && robot.liftr.getCurrentPosition() < top + 10 && (time + delay) < getRuntime()) {
                     ready = true;
                 }
         }
+        if (state == 17) {
+
+            if (oneshot == false) {
+                time = getRuntime();
+                ready = false;
+                oneshot = true;
+            }
+            robot.liftr.setTargetPosition(low);
+            robot.liftr.setPower(liftpower);
+            robot.liftl.setTargetPosition(low);
+            robot.liftl.setPower(liftpower);
+
+            intakepos = (intakeopen);
+            clamppos = (clampclosed);
+
+            if (robot.liftr.getCurrentPosition() > low - 10 && robot.liftr.getCurrentPosition() < low + 10 && (time + delay) < getRuntime()) {
+                ready = true;
+            }
+        }
+
     }
 
     @Override

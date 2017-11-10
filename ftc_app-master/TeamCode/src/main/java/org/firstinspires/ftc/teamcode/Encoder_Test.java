@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
         import com.qualcomm.robotcore.eventloop.opmode.OpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
         import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by Quick's on 9/28/2017.
  */
 @TeleOp(name="Encoder")
+@Disabled
 public class Encoder_Test extends OpMode {
 
     Hardware_robodux robot = new Hardware_robodux();

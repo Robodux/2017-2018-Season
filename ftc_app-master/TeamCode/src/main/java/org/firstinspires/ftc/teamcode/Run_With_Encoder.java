@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.configuration.MotorConfiguration;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.configuration.MotorConfiguration;
  * Created by Quick's on 9/21/2017.
  */
 @Autonomous
+@Disabled
 public class Run_With_Encoder extends OpMode{
 
     Hardware_robodux robot = new Hardware_robodux();

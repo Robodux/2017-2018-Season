@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Quick's on 10/19/2017.
  */
 @TeleOp(name = "Servo Position")
+@Disabled
 public class Servo_Position extends OpMode {
     Hardware_robodux robot = new Hardware_robodux();
 
